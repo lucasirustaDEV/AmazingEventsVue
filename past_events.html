@@ -31,14 +31,14 @@
 
     <div class="container bg-light border-bottom">
         <header class="d-flex flex-wrap justify-content-center align-items-center py-3">
-            <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <a href="./index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <img :src="logo" alt="Amazing Events Logo" class="float-start img-logo">
             </a>
 
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="./upcoming_events.html" class="nav-link">Upcoming Events</a></li>
-                <li class="nav-item"><a href="./past_events.html" class="nav-link">Past Events</a></li>
+                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Past Events</a></li>
                 <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item"><a href="./stats.html" class="nav-link">Stats</a></li>
             </ul>
@@ -49,7 +49,7 @@
         <section class="py-5 text-center container bg-light ">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light" id="page">HOME</h1>
+                    <h1 class="fw-light" id="page">PAST EVENTS</h1>
                 </div>
             </div>
         </section>
@@ -73,10 +73,11 @@
                 </form>
             </div>
         </div>
-
+        
         <div class="album py-5 container border-bottom">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="card-js">
                 <!-- loadCards(array) -->
+                <!-- {{loadPastEvents}} -->
                 <template v-if="events.length != 0">
                     <template v-for="event of events">
                         <div class="col">
@@ -131,7 +132,7 @@
     </div>
 
 </body>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="./js/main.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./js/main.js"></script>
 
 </html>

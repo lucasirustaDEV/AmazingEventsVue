@@ -5,85 +5,106 @@ const app = createApp({
         return {
             API_URL_EVENTS: "https://mindhub-xj03.onrender.com/api/amazing",
             events: [],
-            currentDate: "",
+            currentDate: '',
             categories: [],
-            //tagCards: document.getElementById("card-js"),
-            //tagCheckboxs: document.getElementById("category-js"),
-            //search: document.getElementById('search'),
-            //mensaje: 'Hola desde VUE!',
-            //nombre: 'Eduardo',
-            //edad: 33,
-            //contador: 0,
-            //texto: '',
-            //foto: 'gato',
-            //frutas: ['melon','pera','sandia',null,'tomate',null],
-            //fruta: '',
+            searchText: '',
+            checkCategories: [],
+            eventsFilter: [],
+            logo: './assets/LogoAmazingEvents.png',
+            activePage: '',
+            eventDetails: [],
+            
+            dataEvents: [],
+
+            contador: 0,
+
         }
     },
     created(){
         console.log('app creada');
         this.getEvents();
-        //console.log(this.mensaje);
-        //let h1 = document.querySelector('h1')
-        //console.log(h1);
+       
     },
     mounted(){
 
-        this.getCategories(this.events);
-        
-        //loadCategories(dataEvents.events);
-
-        //search.addEventListener('input', crossFilter) 
-        //tagCheckboxs.addEventListener('change', crossFilter);
-    
-        //crossFilter();
-
-        //console.log('app montada');
-        //console.log(this.mensaje);
-        //let h1 = document.querySelector('h1')
-        //console.log(h1);
     },
     methods:{
         async getEvents() {
             try {
-              const response = await fetch(this.API_URL_EVENTS);
-              const dataEvents = await response.json();
+                const response = await fetch(this.API_URL_EVENTS);
+                const dataEvents = await response.json();
 
-              this.events = dataEvents.events;
-              this.currentDate = dataEvents.currentDate;
-              
-              this.getCategories(this.events);
+                this.currentDate = dataEvents.currentDate;
+
+                this.loadPage();
+                console.log(this.activePage);
+
+                if (this.activePage == "PAST EVENTS"){
+                    this.events = dataEvents.events.filter(event => event.date < this.currentDate);
+                    this.dataEvents = this.events;
+                } else if (this.activePage == "UPCOMING EVENTS"){
+                    console.log('paso por el upcoming');
+                    this.events = dataEvents.events.filter(event => event.date > this.currentDate);
+                    this.dataEvents = this.events;
+                }else {
+                    console.log('paso por el home');
+                    this.events = dataEvents.events;
+                    this.dataEvents = this.events;
+                }
+                console.log(this.dataEvents);
+                
+                this.getCategories();
 
             }catch (error) {
               console.log(error.message);
             }
-          },
+        },
 
-        getCategories(events) {
+        getCategories() {
             let categorias = [];
-            events.forEach(event => {
+            this.events.forEach(event => {
                 if (!categorias.includes(event.category)){ 
                     categorias.push(event.category);
                 }
             });
-            //return categories.sort();
             this.categories = categorias.sort();
-            console.log(this.categories);
         },
 
-        contar(){
-            this.contador++
-            console.log("cuenta" + this.contador)
+        filterText(array, text) {
+            let arrayFiltrado = array.filter(event => event.name.toLowerCase().includes(text.toLowerCase()));
+            return arrayFiltrado;
         },
-        agregarElemento(){
-            this.frutas.push(this.fruta)
-            this.fruta = ''
-        }
+        
+        filterCategory(array) {
+            if (this.checkCategories.length === 0){
+                return array;
+            }else {
+                let arrayFiltrado = array.filter(event => this.checkCategories.includes(event.category));
+                return arrayFiltrado;
+            }
+        
+        },
+        
+        loadPage(){
+            this.activePage = document.getElementById("page").innerText;
+        },
+
+
     },
     computed:{
+        crossFilter() {
+            this.eventsFilter = this.filterCategory(this.dataEvents);
+            this.eventsFilter = this.eventsFilter.filter(event => event.name.toLowerCase().includes(this.searchText.toLowerCase()));
+            this.events = this.eventsFilter;
+        },
 
-        //miEdadyMiNombre(){
-            //return `Hola, me llamo ${this.nombre} y tengo ${this.edad} años.`
-        //}
+        loadDetails() {
+            let queryString = location.search;
+            let params = new URLSearchParams(queryString);
+            let eventId = params.get('eventId');
+            console.log("load details");
+            this.eventDetails = this.events.filter(event => event._id == eventId);
+        },
+
     }
 }).mount('#app')

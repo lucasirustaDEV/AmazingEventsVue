@@ -31,13 +31,14 @@
 
     <div class="container bg-light border-bottom">
         <header class="d-flex flex-wrap justify-content-center align-items-center py-3">
-            <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <a href="./index.html"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <img :src="logo" alt="Amazing Events Logo" class="float-start img-logo">
             </a>
 
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="./upcoming_events.html" class="nav-link">Upcoming Events</a></li>
+                <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Upcoming Events</a></li>
                 <li class="nav-item"><a href="./past_events.html" class="nav-link">Past Events</a></li>
                 <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item"><a href="./stats.html" class="nav-link">Stats</a></li>
@@ -49,7 +50,7 @@
         <section class="py-5 text-center container bg-light ">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light" id="page">HOME</h1>
+                    <h1 class="fw-light" id="page">UPCOMING EVENTS</h1>
                 </div>
             </div>
         </section>
@@ -61,15 +62,15 @@
                     <!-- loadCategories(array) -->
                     <template v-for="category of categories">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" :id="category" :value="category" v-model="checkCategories">
+                            <input @change="crossFilter" class="form-check-input" type="checkbox" :id="category" :value="category" v-model="checkCategories">
                             <label class="form-check-label" :for="category">{{category}}</label>
                         </div>
                     </template>
                     <!-- loadCategories(array) -->
-                    {{crossFilter}}
+                    <!-- {{crossFilter}} -->
                 </div>
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search" id="search" v-model="searchText">
+                    <input @input="crossFilter" type="search" class="form-control" placeholder="Search..." aria-label="Search" id="search" v-model="searchText">
                 </form>
             </div>
         </div>
@@ -77,6 +78,7 @@
         <div class="album py-5 container border-bottom">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="card-js">
                 <!-- loadCards(array) -->
+                <!-- {{loadUpcomingEvents}} -->
                 <template v-if="events.length != 0">
                     <template v-for="event of events">
                         <div class="col">
@@ -131,7 +133,7 @@
     </div>
 
 </body>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="./js/main.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./js/main.js"></script>
 
 </html>
