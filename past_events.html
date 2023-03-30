@@ -9,7 +9,7 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./styles/styles.css">
-    <title>Amazing Events Home</title>
+    <title>Past Amazing Events</title>
 </head>
 
 <body id="app">
@@ -74,10 +74,17 @@
             </div>
         </div>
         
+        <template v-if="loading">
+            <div class="text-center m-5">
+                <div class="spinner-grow" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </template>
+        <template v-else>
         <div class="album py-5 container border-bottom">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="card-js">
                 <!-- loadCards(array) -->
-                <!-- {{loadPastEvents}} -->
                 <template v-if="events.length != 0">
                     <template v-for="event of events">
                         <div class="col">
@@ -109,7 +116,7 @@
                 <!-- loadCards(array) -->
             </div>
         </div>
-
+        </template>
     </main>
 
     <div class="container bg-light">
